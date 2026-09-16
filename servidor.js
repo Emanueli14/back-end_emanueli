@@ -18,6 +18,7 @@ app.use(express.json());
 // Os dados moram aqui, na memoria. Somem quando o servidor cai.
 // (Na Aula 03 isso vira banco de dados.)
 // ------------------------------------------------------------
+// [PROF] O array ja comeca com um treino de id 1 e o proximoId tambem eh 1. O primeiro POST vai criar outro treino com id 1. Deixa o array vazio.
 const treinos = [{ id: 1, nome: 'Treino A', duracao: 30 }];
 let proximoId = 1;
 
@@ -50,6 +51,7 @@ app.get('/treinos/:id', (req, res) => {
     const id = Number(req.params.id);
     const treino = treinos.find((t) => t.id === id);
     if (treino === undefined) {
+        // [PROF] O README pede o campo erro, nao error. Isso derruba 3 testes, confere em todas as respostas de erro.
         return res.status(404).json({ error: 'Treino nao encontrado' });
     }
     res.status(200).json(treino);
@@ -61,10 +63,12 @@ app.get('/treinos/:id', (req, res) => {
 app.post('/treinos', (req, res) => {
     const erro = validarTreino(req.body);
     if (erro !== null) {
+        // [PROF] erro, nao error.
         return res.status(400).json({ error: erro });
     }
     const treino = {id: proximoId,
         nome: req.body.nome,
+        // [PROF] O treino so tem nome e duracao. Esse campo data nao existe no README.
         data: req.body.data,
         duracao: req.body.duracao,
     };
@@ -80,9 +84,11 @@ app.put('/treinos/:id', (req, res) => {
     const id = Number(req.params.id);
     const trino = treinos.find((t) => t.id === id);
     if (trino === undefined) {
+        // [PROF] erro, nao error.
         return res.status(404).json({ error: 'Treino nao encontrado' });
     }
     const erro = validarTreino(req.body);
+    // [PROF] Essa condicao ta invertida: do jeito que ta, quando os dados estao CERTOS voce responde 400. E faltou o return.
     if (erro === null) {
         res.status(400).json({ erro: erro });
     }
@@ -99,6 +105,7 @@ app.delete('/treinos/:id', (req, res) => {
     const id = Number(req.params.id);
     const posicao = treinos.findIndex((t) => t.id === id);
     if (posicao === -1) {
+        // [PROF] erro, nao error.
         return res.status(404).json({ error: 'Treino nao encontrado' });
     }
     treinos.splice(posicao, 1);
