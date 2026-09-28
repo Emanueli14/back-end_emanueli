@@ -8,130 +8,97 @@
 
 @url = http://localhost:3000
 
-### 1 - Listar todos os treinos
+
+### 1 - Listar todos os treinos            -> espera 200 e um array
 GET {{url}}/treinos
 
-###
 
-### 2 - Criar um treino
+### 2 - Criar um treino                    -> espera 201
 POST {{url}}/treinos
 Content-Type: application/json
 
 {
-  "nome": "Peito e triceps",
-  "duracao": 90
+    "nome": "Peito e triceps",
+    "duracao": 60
 }
 
-###
 
-### 3 - Criar outro treino
+### 3 - Criar outro treino                 -> espera 201
 POST {{url}}/treinos
 Content-Type: application/json
 
 {
-  "nome": "Costas e biceps",
-  "duracao": 12
+    "nome": "Costas e biceps",
+    "duracao": 45
 }
 
-###
 
-### 4 - Buscar o treino 1
+### 4 - Buscar o treino 1                  -> espera 200
 GET {{url}}/treinos/1
 
-###
 
-### 5 - Buscar um treino que nao existe
+### 5 - Buscar um treino que nao existe    -> espera 404
 GET {{url}}/treinos/99999
 
-###
 
-### 6 - Criar sem o nome
+### 6 - Criar sem o nome                   -> espera 400
 POST {{url}}/treinos
 Content-Type: application/json
 
 {
-  "duracao": 30
+    "duracao": 30
 }
 
-###
 
-### 7 - Criar com duracao invalida
+### 7 - Criar com duracao invalida         -> espera 400
 POST {{url}}/treinos
 Content-Type: application/json
 
 {
-  "nome": "Corrida",
-  "duracao": -5
+    "nome": "Corrida",
+    "duracao": -5
 }
 
-###
 
-### 8 - Alterar o treino 1
+### 8 - Alterar o treino 1                 -> espera 200
 PUT {{url}}/treinos/1
 Content-Type: application/json
 
 {
-  "nome": "Peito, triceps e ombro",
-  "duracao": 75
+    "nome": "Peito, triceps e ombro",
+    "duracao": 75
 }
 
-###
 
-### 9 - Alterar um treino que nao existe
+### 9 - Alterar um treino que nao existe   -> espera 404
 PUT {{url}}/treinos/99999
 Content-Type: application/json
 
 {
-  "nome": "Qualquer",
-  "duracao": 10
+    "nome": "Qualquer",
+    "duracao": 10
 }
 
-###
 
-### 10 - Apagar o treino 2
+### 10 - Apagar o treino 2                 -> espera 204 (sem corpo)
 DELETE {{url}}/treinos/2
 
-###
 
-### 11 - Apagar um treino que nao existe
+### 11 - Apagar um treino que nao existe   -> espera 404
 DELETE {{url}}/treinos/99999
 
-###
 
-### 12 - Listar de novo pra conferir
+### 12 - Listar de novo pra conferir       -> espera 200 /
 GET {{url}}/treinos
 
-###
-
-### 13 - Obter o total de treinos
-GET {{url}}/treinos/total
-
-###
-
-### 14 - Obter o resumo estatístico
-GET {{url}}/treinos/resumo
-
-###
-
-### 15 - Filtrar por duração mínima
-GET {{url}}/treinos?minimo=40
-
-###
-
-### 16 - Buscar por termo no nome
+### 13. Busca por nome (Filtrar por 'peito')
 GET {{url}}/treinos?busca=peito
 
-###
+### 14. Resumo estatístico (COUNT, SUM, AVG)
+GET {{url}}/treinos/resumo
 
-### 17 - Combinar filtro de duração e busca por nome
-GET {{url}}/treinos?minimo=40&busca=peito
-
-###
-
-### 18 - Testar ID com formato inválido
+### 15. Id invalido (Texto - Deve dar erro 400)
 GET {{url}}/treinos/abc
 
-###
-
-### 19 - Testar ID decimal
-GET {{url}}/treinos/2.5
+### 16. Id invalido (Número inexistente - Deve dar erro 404)
+GET {{url}}/treinos/999
