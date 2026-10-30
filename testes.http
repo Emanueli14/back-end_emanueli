@@ -102,3 +102,74 @@ GET {{url}}/treinos/abc
 
 ### 16. Id invalido (Número inexistente - Deve dar erro 404)
 GET {{url}}/treinos/999
+
+
+### ============================================================
+### TESTES DA AULA 05 - AUTENTICAÇÃO E SESSÕES
+### ============================================================
+
+### Ex 15 - Login com a senha certa (espera 200 e Set-Cookie)
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "usuario": "diego",
+    "senha": "1234"
+}
+
+
+### Ex 15 - Ver perfil logado (espera 200 com os dados do diego)
+### O REST Client envia o cookie automaticamente se você rodou o login acima
+GET {{url}}/perfil
+
+
+### Ex 18 - Testar criação de treino agora que estamos LOGADOS (espera 201)
+POST {{url}}/treinos
+Content-Type: application/json
+
+{
+    "nome": "Treino Autenticado",
+    "duracao": 50
+}
+
+
+### Ex 15 - Fazer Logout (espera 204 sem corpo)
+POST {{url}}/logout
+
+
+### Ex 15/16 - Ver perfil após Logout (espera 401 - Faça login primeiro)
+GET {{url}}/perfil
+
+
+### Ex 16 - Caminho Ruim: Login com senha errada (espera 401)
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "usuario": "diego",
+    "senha": "ERRADA"
+}
+
+
+### Ex 16 - Caminho Ruim: Usuário inexistente (espera 401)
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "usuario": "nao_existo",
+    "senha": "1234"
+}
+
+
+### Ex 17 - Sessão por Cliente: Logar como 'aluno' (espera 200)
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "usuario": "aluno",
+    "senha": "senha"
+}
+
+
+### Ex 17 - Conferir perfil do 'aluno' (espera 200 trazendo os dados de 'aluno')
+GET {{url}}/perfil
