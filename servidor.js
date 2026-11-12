@@ -6,7 +6,6 @@ const app = express();
 app.use(express.json());
 
 app.get('/treinos', treinosController.listar);
-app.get('/treinos/resumo', treinosController.resumo);
 app.get('/treinos/:id', treinosController.buscarUm);
 app.post('/treinos', treinosController.criar);
 app.put('/treinos/:id', treinosController.atualizar);
